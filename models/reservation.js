@@ -16,10 +16,56 @@ class Reservation {
     this.notes = notes;
   }
 
-  /** formatter for startAt */
 
+/* method for setting/getting a reservation */ 
+  set startAt(val) {
+    if (val instanceof Date && !isNaN(val)) this._startAt = val; //if the value is a Date and a number, set startAt to val.
+    else throw new Error("Not a valid startAt.");
+}   
+
+  get startAt(){
+    return this._startAt;
+}
+/** formatter for startAt */
+  
   getformattedStartAt() {
     return moment(this.startAt).format('MMMM Do YYYY, h:mm a');
+  }
+
+
+/* methods for setting/getting numGuests */
+  set numGuests(val){
+    if (val <1){
+      throw new Error('Number of guests can not be less that 1')
+    }else{
+      this._numGuests = val;
+    }
+  }
+
+  get numGuests(){
+    return this._numGuests;
+  }
+
+/* methods for setting/getting customerID */
+  set customerId(val){
+    if (this._customerId && this._customerId !== val){
+      throw new Error('Customer ID cannot be changed');
+    }else{
+      this._customerId = val;
+    }
+  }
+
+  get customerId(){
+    return this._customerId;
+  }
+
+/* methods for setting/getting customerID */
+  set notes(val){
+    this._notes = val || "";
+  } 
+
+  get notes(){
+    return this._notes;
   }
 
   /** given a customer id, find their reservations. */

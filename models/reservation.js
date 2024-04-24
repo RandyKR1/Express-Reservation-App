@@ -84,6 +84,27 @@ class Reservation {
 
     return results.rows.map(row => new Reservation(row));
   }
+
+/* get reservation by id */
+  static async get(id){
+    const result = await db.query(`
+      SELECT id, 
+      customer_id AS 'Customer',
+      num_guests AS 'Guests,
+      start_at AS 'Start',
+      notes
+      FROM reservations WHERE id = $1`, [id]
+    )
+
+    let reservation = result.rows[0]
+
+    if (reservation === undefined){
+      throw new Error('No such reservation')
+    }
+
+    return new Reservation(reservation);
+}
+
 }
 
 
